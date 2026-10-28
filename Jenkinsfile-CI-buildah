@@ -55,6 +55,7 @@ pipeline {
           env.FINAL_IMAGE_TAG = "${env.IMAGE_TAG}-bd${env.BUILD_NUMBER}-${env.JOB_BASE_NAME}-${shortCommit}"
         }
         sh '''
+            set +x
             set -eu
             REG_HOST="${IMAGE_REGISTRY_URL}"
             IMAGE_REF="${IMAGE_REGISTRY_URL}/${IMAGE_REGISTRY_PROJECT}/${IMAGE_NAME}:${FINAL_IMAGE_TAG}"
@@ -84,6 +85,7 @@ pipeline {
           passwordVariable: 'GIT_PASS'
         )]) {
           sh '''
+            set +x
             set -eu
             git config user.name "sk122-gitops"
             git config user.email "jenkins@localhost"
@@ -130,4 +132,3 @@ ASKPASS
     }
   }
 }
-
