@@ -51,7 +51,7 @@ pipeline {
         sh '''
             set -eu
             REG_HOST="${IMAGE_REGISTRY_URL}"
-            FINAL_IMAGE_TAG="${IMAGE_TAG}-${BUILD_NUMBER}"
+            FINAL_IMAGE_TAG="${IMAGE_TAG}-${JOB_BASE_NAME}-${BUILD_NUMBER}"
             IMAGE_REF="${IMAGE_REGISTRY_URL}/${IMAGE_REGISTRY_PROJECT}/${IMAGE_NAME}:${FINAL_IMAGE_TAG}"
 
             # 1. 로그인
@@ -77,7 +77,7 @@ pipeline {
           test -d ./kustomize/overlays/dev
           cd ./kustomize/overlays/dev
 
-          FINAL_IMAGE_TAG="${IMAGE_TAG}-${BUILD_NUMBER}"
+          FINAL_IMAGE_TAG="${IMAGE_TAG}-${JOB_BASE_NAME}-${BUILD_NUMBER}"
           IMAGE_BASE="${IMAGE_REGISTRY_URL}/${IMAGE_REGISTRY_PROJECT}/${IMAGE_NAME}"
 
           kustomize edit set image "${IMAGE_BASE}=${IMAGE_BASE}:${FINAL_IMAGE_TAG}"
@@ -96,7 +96,7 @@ pipeline {
         sh '''
           set -eu
 
-          FINAL_IMAGE_TAG="${IMAGE_TAG}-${BUILD_NUMBER}"
+          FINAL_IMAGE_TAG="${IMAGE_TAG}-${JOB_BASE_NAME}-${BUILD_NUMBER}"
           IMAGE_BASE="${IMAGE_REGISTRY_URL}/${IMAGE_REGISTRY_PROJECT}/${IMAGE_NAME}"
 
           # ===== DEBUG:START =====
